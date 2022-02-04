@@ -22,5 +22,7 @@
 
 * If a hub cluster fails and you need to gather credentials, or you wish to gather the kubeadmin credentials for all managed clusters you can use the `get_managedcluster_credentials.sh` script. 
 
+### Running the script
+
 * To run the script simply define the credentials for the RHACM hub cluster you wish to gather credentials for. 
 * Run `get_managedcluster_credentials.sh`
