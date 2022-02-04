@@ -13,12 +13,12 @@ apiURL=$(oc get clusterdeployment -n $clusterName -o jsonpath="{.items[0].status
 
 oc login $apiURL -u $username -p $password --insecure-skip-tls-verify
 
-# oc delete pods --all -n submariner-operator
+oc delete pods --all -n submariner-operator
 
-# oc -n submariner-operator scale deploy submariner-addon --replicas=0
-# oc patch Submariner submariner --type=merge -p '{"spec":{"natEnabled": true}}' -n submariner-operator
-# oc -n submariner-operator scale deploy submariner-addon --replicas=1
+oc -n submariner-operator scale deploy submariner-addon --replicas=0
+oc patch Submariner submariner --type=merge -p '{"spec":{"natEnabled": true}}' -n submariner-operator
+oc -n submariner-operator scale deploy submariner-addon --replicas=1
 
 oc login <token or creds for HUB CLUSTER> 
-
+done
 subctl diagnose all
