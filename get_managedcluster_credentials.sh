@@ -11,12 +11,16 @@ declare -a managed_clusters=$(oc get managedclusters --no-headers -o custom-colu
 for cluster in $managed_clusters
 do
 
-clusterSecret=$(oc get clusterdeployment $managedClusterName -n $managedClusterName -o jsonpath='{.spec.clusterMetadata.adminPasswordSecretRef.name}')
-username=$(oc get secret $clusterSecret  -n $managedClusterName -o jsonpath="{.data.username}" | base64 --decode)
-password=$(oc get secret $clusterSecret  -n $managedClusterName -o jsonpath="{.data.password}" | base64 --decode)
-apiURL=$(oc get clusterdeployment -n $managedClusterName -o jsonpath="{.items[0].status.apiURL}")
+clusterSecret=$(oc get clusterdeployment $cluster -n $cluster -o=jsonpath='{.spec.clusterMetadata.adminPasswordSecretRef.name}')
+username=$(oc get secret $clusterSecret  -n $cluster -o=jsonpath="{.data.username}" | base64 --decode)
+password=$(oc get secret $clusterSecret  -n $cluster -o=jsonpath="{.data.password}" | base64 --decode)
+apiURL=$(oc get clusterdeployment -n $cluster -o=jsonpath="{.items[0].status.apiURL}")
 
 # pipe these credentials to wherever you want 
-# i.e. echo password > $managedClusterName_password.txt
+
+echo $cluster
+echo "  ${apiURL}"
+echo "  ${username}"
+echo "  ${password}"
 
 done
